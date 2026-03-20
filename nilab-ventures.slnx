@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="nilab-ventures.client/nilab-ventures.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="nilab-ventures.Server/nilab-ventures.Server.csproj" />
+</Solution>

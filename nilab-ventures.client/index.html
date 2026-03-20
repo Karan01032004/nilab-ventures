@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <link rel="icon" type="image/png" href="/public/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Nilab Ventures" />
+    <link rel="manifest" href="/public/site.webmanifest" />
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+        (function () {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -35px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Jab element viewport mein aaye
+                        entry.target.classList.add('reveal-now');
+                    } else {
+                        // Jab element viewport se bahar chala jaye (Reset)
+                        entry.target.classList.remove('reveal-now');
+                    }
+                });
+            }, observerOptions);
+
+            const applyObserver = () => {
+                const elements = document.querySelectorAll('.slide-up, .slide-down, .slide-left, .slide-right');
+                elements.forEach(el => observer.observe(el));
+            };
+
+            // MutationObserver for React dynamic content
+            const mutationObserver = new MutationObserver(() => applyObserver());
+            mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+            window.onload = applyObserver;
+        })();
+    </script>
+</body>
+</html>

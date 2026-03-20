@@ -1,0 +1,110 @@
+﻿@import "tailwindcss";
+@config "../tailwind.config.js";
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+@theme {
+    --font-figtree: "Figtree", sans-serif;
+    --font-playfair: "Playfair Display", serif;
+}
+@layer base {
+    /* Set Playfair for all headings */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-playfair);
+    }
+
+    /* Set Figtree for body text and common elements */
+    body, p, li, a, td, dt, span {
+        font-family: var(--font-figtree);
+        font-size: 16px ;
+    }
+    .font-figtree{
+        font-family: var(--font-figtree);
+    }
+    .arrow-bullet {
+        clip-path: polygon( 0 0, 70% 50%, 0 100%, 30% 50% );
+    }
+    .arrow-bullet {
+        width: 18px;
+        height: 18px;
+    }
+
+}
+html {
+    scroll-behavior: smooth !important;
+}
+@layer components {
+    /* Base Animation State */
+    .slide-up, .slide-down, .slide-left, .slide-right {
+        opacity: 0 !important;
+        transition-property: opacity, transform !important;
+        transition-duration: 0.8s !important;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+        will-change: transform, opacity;
+    }
+
+    /* Direction Offsets */
+
+    @media (min-width:992px) {
+        .slide-up {
+            transform: translateY(15px) !important;
+        }
+
+        .slide-down {
+            transform: translateY(-15px) !important;
+        }
+
+        .slide-left {
+            transform: translateX(15px) !important;
+        }
+
+        .slide-right {
+            transform: translateX(-15px) !important;
+        }
+    }
+
+        @media (max-width:991px) {
+
+            .slide-up, .slide-down, .slide-left, .slide-right {
+                transform: translateY(15px) !important;
+            }
+        }
+
+        /* Active State */
+        html body .reveal-now {
+            opacity: 1 !important;
+            transform: translate(0, 0) !important;
+        }
+
+        /* Custom Delay Utilities (25ms increments) */
+        .delay-25 {
+            transition-delay: 25ms !important;
+        }
+
+        .delay-50 {
+            transition-delay: 50ms !important;
+        }
+
+        .delay-75 {
+            transition-delay: 75ms !important;
+        }
+
+        .delay-100 {
+            transition-delay: 100ms !important;
+        }
+
+        .delay-150 {
+            transition-delay: 150ms !important;
+        }
+
+        .delay-200 {
+            transition-delay: 200ms !important;
+        }
+
+        .delay-250 {
+            transition-delay: 250ms !important;
+        }
+
+        .delay-300 {
+            transition-delay: 300ms !important;
+        }
+    }
