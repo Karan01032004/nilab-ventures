@@ -6,7 +6,7 @@ using nilab_ventures.Server.DTOs;
 using nilab_ventures.Server.Models;
 using System.Net;
 using System.Net.Mail;
-using System.Text.Json;
+using System.Text.Json; 
 
 namespace nilab_ventures.Server.Controllers
 {
@@ -27,8 +27,7 @@ namespace nilab_ventures.Server.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
+            } 
             try
             {
                 var entity = new Funding

@@ -50,18 +50,11 @@ else
 }
 
 app.UseHttpsRedirection();
-//app.Use(async (context, next) =>
-//{   
-//    context.Response.Headers["Content-Security-Policy"] =
-//        "default-src 'self'; " +
-//        "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; " +
-//        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-//        "font-src 'self' https://fonts.gstatic.com; " +
-//        "img-src 'self' data: https:; " +
-//        "connect-src 'self' https:;";
-
-//    await next();
-//});
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.UseAuthorization();
 
 app.MapControllers();

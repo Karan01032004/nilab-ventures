@@ -33,7 +33,7 @@ function App() {
                                 <AppLayout />
                             </ProtectedRoute>
                         }
-                    >
+                    >sign
                         <Route path="dashboard" element={<Dashboard />} />
                         <Route path="inquiry" element={<InquiryTable />} />
                             <Route path="attended-inquiry" element={<InquiryTab />} />
