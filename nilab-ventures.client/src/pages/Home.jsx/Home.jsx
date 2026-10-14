@@ -1,5 +1,5 @@
 ﻿import { Link } from "react-router-dom"; // Link import karein
-import { Helmet } from "react-helmet-async"; 
+import SeoHelmet from "../../seo/SeoHelmet"; 
 
 import Banner from "../../componants/sections/Banner/Banner";
 import ComprehensiveFunding from "../../componants/sections/ComprehensiveFunding/ComprehensiveFunding";
@@ -17,21 +17,7 @@ function Home() {
 
     return (
         <div className="scroll-smooth">
-            <Helmet>
-                <title>Nilab Ventures Strategic Investment Partner</title>
-
-                <meta
-                    name="description"
-                    content="We provide strategic capital, operational expertise and long-term partnership to help startups scale from seed to global impact."
-                />
-
-                <link
-                    rel="canonical"
-                    href="https://www.nilabventures.com/"
-                />
-
-               
-            </Helmet>
+            <SeoHelmet path="/" />
             {/* 1. Banner Section */}
             <section id="home" >
                 <Banner

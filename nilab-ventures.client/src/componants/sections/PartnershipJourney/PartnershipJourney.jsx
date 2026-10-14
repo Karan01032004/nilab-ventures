@@ -90,7 +90,7 @@ function PartnershipJourney({
                                     rel="noopener noreferrer"
                                     className="transition hover:text-emerald-600"
                                 >
-                                    D&C
+                                    Dots and Coms
                                 </a> |   <a
                                     href="/sitemap"
                                     className="transition hover:text-emerald-600"
@@ -103,7 +103,7 @@ function PartnershipJourney({
 
                     </div>
 
-                    {/* RIGHT COLUMN (Desktop Image + D&C) */}
+                    {/* RIGHT COLUMN (Desktop Image + Dots and Coms) */}
                     <div className=" hidden flex-col lg:flex">
 
                         <picture>
@@ -117,7 +117,7 @@ function PartnershipJourney({
                             />
                         </picture>
 
-                        {/* D&C (Desktop Only - Below Image) */}
+                        {/* Dots and Coms (Desktop Only - Below Image) */}
                         <p className="slide-left mt-6 text-center text-gray-600">
                             Website Design by{" "}
                             <a
@@ -126,7 +126,7 @@ function PartnershipJourney({
                                 rel="noopener noreferrer"
                                 className="transition hover:text-emerald-600"
                             >
-                                D&C
+                                Dots and Coms
                             </a>  |   <a
                                 href="/sitemap"
                                 className="transition hover:text-emerald-600"

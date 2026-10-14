@@ -1,4 +1,5 @@
 ﻿import ButtonBlue from "../../ui/ButtonBlue/ButtonBlue";
+import ReadyImage from "../../ui/ReadyImage/ReadyImage";
 
 import logoWebp from "../../../assets/img/nilab-ventures-brand.webp";
 import logoPng from "../../../assets/img/nilab-ventures-brand.png";
@@ -16,46 +17,41 @@ function Banner({
         /* FULL-WIDTH BACKGROUND */
         <section className="bg-[#0f0f0f] text-white">
 
-            {/* CONTAINER */}   
+            {/* CONTAINER */}
             <div className="container ">
-                <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+                <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-x-10 lg:gap-y-0">
 
                     {/* LEFT CONTENT */}
-                    <div className="order-1 px-4 py-10 sm:py-14">
-                        <picture>
-                            <source srcSet={logoWebp} type="image/webp" loading="lazy" />
-                            <source srcSet={logoPng} type="image/png" loading="lazy" />
-                            <img
-                                src={logoPng}
-                                alt="Nilab Ventures"
-                                className="slide-right mb-6 w-[160px]"
-                                loading="lazy"
-                            />
-                        </picture>
+                    <div className="order-1 px-4 pt-10 sm:pt-14 lg:col-start-1 lg:row-start-1">
+                        <ReadyImage
+                            src={logoWebp}
+                            fallbackSrc={logoPng}
+                            alt="Nilab Ventures"
+                            className="slide-right mb-6 w-[160px]"
+                            reserveClassName="slide-right mb-6 h-10 w-[160px]"
+                        />
 
-                        <h1 className="slide-right mb-6 text-3xl leading-tight font-semibold text-[#8fd0ff] sm:text-4xl">
+                        <h1 className="slide-right mb-6 text-3xl leading-tight font-semibold text-[#8fd0ff] sm:text-4xl lg:mb-0">
                             {title}
                         </h1>
+                    </div>
 
-                        {/* IMAGE BELOW TITLE ( < 1024px ) */}
-                        <div className="slide-right mb-6 lg:hidden">
-                            <picture>
-                                <source srcSet={bannerWebp} type="image/webp" loading="lazy" />
-                                <source srcSet={bannerPng} type="image/png" loading="lazy"  />
-                                <img
-                                    src={bannerPng}
-                                    alt="Nilab Ventures – Foundation for Scale"
-                                    className="h-[350px] w-full rounded-xl object-cover"
-                                    loading="lazy"
-                                />
-                            </picture>
-                        </div>
+                    {/* ONE HERO — mobile sits under the title, desktop fills the right column */}
+                    <div className="order-2 px-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:h-full lg:self-stretch lg:px-0">
+                        <ReadyImage
+                            src={bannerWebp}
+                            fallbackSrc={bannerPng}
+                            alt=""
+                            className="slide-right h-[350px] w-full rounded-xl object-cover lg:h-full lg:min-h-[520px] lg:rounded-none"
+                            reserveClassName="h-[350px] w-full lg:h-full lg:min-h-[520px]"
+                        />
+                    </div>
 
+                    <div className="order-3 px-4 pb-10 sm:pb-14 lg:col-start-1 lg:row-start-2">
                         <p className="slide-right mb-6 max-w-xl leading-relaxed text-gray-300">
                             {description}
                         </p>
 
-                        {/* ✅ BUTTONS (ButtonBlue applied) */}
                         <div className="slide-right flex flex-wrap gap-4">
                             {primaryBtn && (
                                 <ButtonBlue
@@ -72,20 +68,6 @@ function Banner({
                                 />
                             )}
                         </div>
-                    </div>
-
-                    {/* RIGHT IMAGE ( ≥ 1024px ) */}
-                    <div className="order-2 hidden h-full lg:block">
-                        <picture>
-                            <source srcSet={bannerWebp} type="image/webp" loading="lazy"  />
-                            <source srcSet={bannerPng} type="image/png" loading="lazy"  />
-                            <img
-                                src={bannerPng}
-                                alt="Nilab Ventures – Foundation for Scale"
-                                className="slide-left h-full w-full object-cover"
-                                loading="lazy"
-                            />
-                        </picture>
                     </div>
 
                 </div>

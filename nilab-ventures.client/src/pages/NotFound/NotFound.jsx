@@ -1,12 +1,15 @@
 ﻿import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import SeoHelmet from "../../seo/SeoHelmet";
+import ReadyImage from "../../componants/ui/ReadyImage/ReadyImage";
+import { SITE_ORIGIN } from "../../seo/publicRoutes";
 import logoWebp from "../../assets/img/nilab-ventures-brand.webp";
 import logoPng from "../../assets/img/nilab-ventures-brand.png";
 import bannerImageWebp from "../../assets/img/nilab-ventures-foundation-investment-provider.webp";
 import bannerImagePng from "../../assets/img/nilab-ventures-foundation-investment-provider.png";
 
 const NotFound = () => {
-    const { hash } = useLocation();
+    const { hash, pathname } = useLocation();
 
     // ✅ Smooth Scroll Logic for Hash Links
     useEffect(() => {
@@ -77,6 +80,7 @@ const NotFound = () => {
 
     return (
         <main className="notfound-wrapper bg-white">
+            <SeoHelmet notFound canonical={`${SITE_ORIGIN}${pathname === "/" ? "/" : pathname.replace(/\/+$/, "") || "/"}`} />
             {/* Banner - Heading changed to 404, rest same as requested */}
             <section
                 className="banner relative flex items-center bg-cover bg-center bg-no-repeat py-16 md:py-24"
@@ -90,11 +94,13 @@ const NotFound = () => {
                 <div className="relative container mx-auto px-4">
                     <div className="flex flex-col justify-center gap-2">
                         <Link to="/" className="inline-block w-fit">
-                            <picture>
-                                <source srcSet={logoWebp} type="image/webp" />
-                                <source srcSet={logoPng} type="image/png" />
-                                <img src={logoPng} alt="Nilab Ventures" className="mb-4 w-[160px]" />
-                            </picture>
+                            <ReadyImage
+                                src={logoWebp}
+                                fallbackSrc={logoPng}
+                                alt="Nilab Ventures"
+                                className="mb-4 w-[160px]"
+                                reserveClassName="mb-4 h-10 w-[160px]"
+                            />
                         </Link>
                         <h1 className=" text-4xl font-bold tracking-tight text-white sm:text-5xl">
                             404
