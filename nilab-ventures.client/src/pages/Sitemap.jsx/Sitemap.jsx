@@ -1,6 +1,7 @@
 ﻿import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Helmet } from "react-helmet-async";
+import SeoHelmet from "../../seo/SeoHelmet";
+import ReadyImage from "../../componants/ui/ReadyImage/ReadyImage";
 import logoWebp from "../../assets/img/nilab-ventures-brand.webp";
 import logoPng from "../../assets/img/nilab-ventures-brand.png";
 import bannerImageWebp from "../../assets/img/nilab-ventures-foundation-investment-provider.webp";
@@ -79,21 +80,7 @@ const Sitemap = () => {
     return (
 
         <main className="sitemap-wrapper bg-white">
-            <Helmet>
-                <title>Nilab Ventures Sitemap | Strategic Investment Partner</title>
-
-                <meta
-                    name="description"
-                    content="Beyond Capital We Provide the Foundation for Scale. We're more than investors we're your strategic partners in building tomorrow's entrepreneurs & industry leaders."
-                />
-
-                <link
-                    rel="canonical"
-                    href="https://www.nilabventures.com/sitemap"
-                />
-
-
-            </Helmet>
+            <SeoHelmet path="/sitemap" />
             {/* Banner (Untouched) */}
             <section
                 className="banner relative flex items-center bg-cover bg-center bg-no-repeat py-16 md:py-24"
@@ -107,11 +94,13 @@ const Sitemap = () => {
                 <div className="relative container mx-auto px-4">
                     <div className="flex flex-col justify-center gap-2">
                         <Link to="/" className="inline-block w-fit">
-                            <picture>
-                                <source srcSet={logoWebp} type="image/webp" loading="lazy"  />
-                                <source srcSet={logoPng} type="image/png" loading="lazy" />
-                                <img src={logoPng} alt="Nilab Ventures" className="mb-4 w-[160px]" loading="lazy" />
-                            </picture>
+                            <ReadyImage
+                                src={logoWebp}
+                                fallbackSrc={logoPng}
+                                alt="Nilab Ventures"
+                                className="mb-4 w-[160px]"
+                                reserveClassName="mb-4 h-10 w-[160px]"
+                            />
                         </Link>
                         <h1 className=" text-4xl font-bold tracking-tight text-white sm:text-5xl">
                             Sitemap

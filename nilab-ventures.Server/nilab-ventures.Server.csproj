@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>nilab_ventures.Server</RootNamespace>
+    <UserSecretsId>nilab-ventures-server-7c3e1a4b-9d2f-4e6a-8b1c-5f0a2d8e6c41</UserSecretsId>
     <SpaRoot>..\nilab-ventures.client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:60820</SpaProxyServerUrl>
@@ -28,5 +29,17 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
+
+  <Target Name="PublishSpaDist" AfterTargets="ComputeFilesToPublish" Condition="'$(SkipSpaPublish)' != 'true'">
+    <Exec WorkingDirectory="$(MSBuildProjectDirectory)\$(SpaRoot)" Command="npm run build" />
+    <ItemGroup>
+      <_SpaDist Include="$(MSBuildProjectDirectory)\$(SpaRoot)\dist\**\*.*" />
+      <ResolvedFileToPublish Include="@(_SpaDist->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>wwwroot\$([MSBuild]::MakeRelative($(MSBuildProjectDirectory)\$(SpaRoot)\dist, %(FullPath)))</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
 
 </Project>

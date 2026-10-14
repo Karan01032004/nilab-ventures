@@ -6,9 +6,13 @@
   "homepage": "/",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "generate:sitemap": "node generate-sitemap.js",
+    "prerender": "node scripts/prerender.mjs",
+    "qa:prerender": "node scripts/qa-prerender.mjs",
+    "build": "node generate-sitemap.js && vite build && node scripts/prerender.mjs && node scripts/qa-prerender.mjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preview:seo": "node scripts/seo-preview-server.mjs"
   },
   "dependencies": {
     "axios": "^1.13.6",

@@ -1,5 +1,7 @@
 ﻿import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import SeoHelmet from "../../seo/SeoHelmet";
+import ReadyImage from "../../componants/ui/ReadyImage/ReadyImage";
 import { ToastContainer, toast } from "react-toastify";
 import ButtonBlue from "../../componants/ui/ButtonBlue/ButtonBlue";
 import bannerImgPng from "../../assets/img/nilab-ventures-funding-application-sm.png";
@@ -398,6 +400,7 @@ export default function FundingApplication() {
     // ── Success screen ────────────────────────────────────────
     if (submitted) return (
         <div className="flex min-h-screen items-center justify-center bg-white px-4 py-16">
+            <SeoHelmet path="/funding-application" />
             <div className="mx-auto w-full max-w-sm text-center">
                 <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#00957A] bg-[#00957A]/10">
                     <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#00957A" strokeWidth="2.5">
@@ -417,6 +420,7 @@ export default function FundingApplication() {
 
     return (
         <div className="min-h-screen bg-gray-50">
+            <SeoHelmet path="/funding-application" />
             <ToastContainer position="top-right" autoClose={2500} />
             {/* ── Hero Banner — untouched ───────────────────────── */}
             <section
@@ -432,11 +436,13 @@ export default function FundingApplication() {
                 <div className="relative container mx-auto px-4">
                     <div className="flex max-w-lg flex-col justify-center gap-3">
                         <Link to="/" className="inline-block w-fit">
-                            <picture>
-                                <source srcSet={logoWebp} type="image/webp" />
-                                <source srcSet={logoPng} type="image/png" />
-                                <img src={logoPng} alt="Nilab Ventures" className="mb-2 w-[160px]" />
-                            </picture>
+                            <ReadyImage
+                                src={logoWebp}
+                                fallbackSrc={logoPng}
+                                alt="Nilab Ventures"
+                                className="mb-2 w-[160px]"
+                                reserveClassName="mb-2 h-10 w-[160px]"
+                            />
                         </Link>
                         <h1 className="text-3xl leading-tight font-bold text-[#8fd0ff] sm:text-4xl lg:text-5xl">
                             Fund <br className="sm:hidden" /> Application

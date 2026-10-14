@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using nilab_ventures.Server.Data;
 using nilab_ventures.Server.DTOs;
+using nilab_ventures.Server.Email;
 using nilab_ventures.Server.Models;
 using System.Net;
 using System.Net.Mail;
@@ -15,10 +16,12 @@ namespace nilab_ventures.Server.Controllers
     public class FundingController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ErrorEmailSender _errorEmail;
 
-        public FundingController(AppDbContext context)
+        public FundingController(AppDbContext context, ErrorEmailSender errorEmail)
         {
             _context = context;
+            _errorEmail = errorEmail;
         }
 
         [HttpPost("submit")]
@@ -28,9 +31,10 @@ namespace nilab_ventures.Server.Controllers
             {
                 return BadRequest(ModelState);
             } 
+            Funding entity;
             try
             {
-                var entity = new Funding
+                entity = new Funding
                 {
                     Name = string.IsNullOrWhiteSpace(dto.Name) ? null : dto.Name.Trim(),
                     Email = string.IsNullOrWhiteSpace(dto.Email) ? null : dto.Email.Trim(),
@@ -76,6 +80,14 @@ namespace nilab_ventures.Server.Controllers
 
                 _context.Funding.Add(entity);
                 await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return await ServerError(ex, "Error while saving data ❌");
+            }
+
+            try
+            {
                 var fundingTypes = entity.funding_types != null
     ? string.Join(", ", JsonSerializer.Deserialize<List<string>>(entity.funding_types))
     : "-";
@@ -190,21 +202,17 @@ namespace nilab_ventures.Server.Controllers
                 message.To.Add("partner@nilabventures.com");
 
                 await smtp.SendMailAsync(message);
-                 
-                return Ok(new
-                {
-                    message = "Application submitted successfully ✅",
-                    id = entity.Id
-                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = "Error while saving data ❌",
-                    error = ex.Message
-                });
+                await _errorEmail.TrySendAsync(HttpContext, ex, StatusCodes.Status500InternalServerError, HttpContext.RequestAborted);
             }
+
+            return Ok(new
+            {
+                message = "Application submitted successfully ✅",
+                id = entity.Id
+            });
         }
  
         [HttpGet("{id}")]
@@ -265,13 +273,7 @@ namespace nilab_ventures.Server.Controllers
             }
             catch (Exception ex)
             {
-                // InnerException check karna debugging ke liye best hai
-                var errorDetail = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
-                return StatusCode(500, new
-                {
-                    message = "Error fetching details ❌",
-                    error = errorDetail
-                });
+                return await ServerError(ex, "Error fetching details ❌");
             }
         }
         [HttpGet("count")]
@@ -288,11 +290,7 @@ namespace nilab_ventures.Server.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = "Error fetching count ❌",
-                    error = ex.Message
-                });
+                return await ServerError(ex, "Error fetching count ❌");
             }
         }
         [HttpGet("list")]
@@ -314,11 +312,7 @@ namespace nilab_ventures.Server.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = "Error fetching list ❌",
-                    error = ex.Message
-                });
+                return await ServerError(ex, "Error fetching list ❌");
             }
         }
 
@@ -341,11 +335,7 @@ namespace nilab_ventures.Server.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = "Error fetching list ❌",
-                    error = ex.Message
-                });
+                return await ServerError(ex, "Error fetching list ❌");
             }
         }
 
@@ -371,11 +361,7 @@ namespace nilab_ventures.Server.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = "Error deleting data ❌",
-                    error = ex.Message
-                });
+                return await ServerError(ex, "Error deleting data ❌");
             }
         }
 
@@ -403,12 +389,14 @@ namespace nilab_ventures.Server.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = "Error updating status ❌",
-                    error = ex.Message
-                });
+                return await ServerError(ex, "Error updating status ❌");
             }
+        }
+
+        private async Task<IActionResult> ServerError(Exception ex, string message)
+        {
+            await _errorEmail.TrySendAsync(HttpContext, ex, StatusCodes.Status500InternalServerError, HttpContext.RequestAborted);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message });
         }
     }
 }
